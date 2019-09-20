@@ -1,6 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const moment = require('moment');
+const Article = require('../articleModel');
 
 module.exports = (app) => {
     app.get('/articles', (req, res)=>{
@@ -32,5 +33,10 @@ module.exports = (app) => {
             })
             res.json(articles)
         })
+    })
+
+    app.post('/article/comment', (req,res)=>{
+        const article = req.body;
+        
     })
 }
