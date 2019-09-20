@@ -1,7 +1,8 @@
 $(document).ready(()=>{
-    const landingPage = () => {
+    (() => {
         $.get('/articles', articles => {
             articles.map(article=>{
+                console.log(article)
                 let postNum;
                 !!article.posts ? postNum = article.posts.length : postNum = '';
                 $('.container').append(`
@@ -9,7 +10,9 @@ $(document).ready(()=>{
                         <div class="media-content">
                         <div class="content">
                             <span>
-                                <strong>Author: </strong>${article.author} &emsp;<small>${article.date}</small>
+                                <b class="article-title">${article.title}</b>&emsp;<small>${article.date}</small>
+                                <br>
+                                <strong class="article-content">Author: </strong>${article.author}
                                 <p class="article-content"><a href="${article.link}">
                                     ${article.summary}
                                 </a></p>
@@ -17,13 +20,14 @@ $(document).ready(()=>{
                         </div>
                         <nav class="level">
                                 <a class="level-item">
-                                    <span class="icon is-small">${postNum}&ensp;<i class="fas fa-comment-alt"></i></span>
+                                    <span class="icon">${postNum}&ensp;<i class="fas fa-comment-alt" value=""></i></span>
                                 </a>
                         </nav>
                     </article>`
                 )
             })
         })
-    }
-    landingPage();
+    })()
+
+
 })
