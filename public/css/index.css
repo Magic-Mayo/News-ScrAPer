@@ -1,7 +1,12 @@
 nav {
- padding: 0 15px;   
+ padding: 0 15px;
+ width: 100%;
 }
 
 .date-sort, .alpha-sort {
     color: black;
+}
+
+.hide {
+    display: none;
 }
