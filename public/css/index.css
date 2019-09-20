@@ -23,3 +23,7 @@ nav {
 .article-content a {
     white-space: normal;
 }
+
+.article-title {
+    font-size: 1.75rem;
+}
