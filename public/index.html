@@ -18,25 +18,58 @@
         </div>
         <div class="level-item">
             <div class="field has-addons">
-                <p class="control">
-                    <input type="text" class="input" placeholder="Find an article">
-                </p>
-                <p class="control">
-                    <button class="button is-link is-outlined">Search</button>
-                </p>
+                <!-- <form id="search"> -->
+                    <p class="control">
+                        <input type="text" class="input" id="nav-search-input" placeholder="Find an article">
+                    </p>
+                    <p class="control">
+                        <button type='submit' class="button is-link is-outlined">Search</button>
+                    </p>
+                <!-- </form> -->
             </div>
         </div>
         <div class="level-right">
             <div class="level-item">
-                <button class="button date-sort has-background-primary">Date of Article &ensp;<span class="" id="date-caret">^</span></button>
-                &ensp;|&ensp;
-                <button class="button alpha-sort has-background-primary">Alphabetical &ensp;<span class="hide" id="alpha-caret">^</span></button>
+                <button class="button date-sort has-background-primary">Date of Article&ensp;<i class="fas fa-angle-down" id="date-caret"></i></button>
+                &emsp;
+                <button class="button alpha-sort has-background-primary">Alphabetical<i class="fas fa-angle-down hide" id="alpha-caret"></i></button>
             </div>
         </div>
     </nav>
 
     <div class="container">
-
+        <article class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                    <img src="https://bulma.io/images/placeholders/128x128.png">
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="field">
+                    <p class="control">
+                        <textarea class="textarea" placeholder="Add a comment..."></textarea>
+                    </p>
+                </div>
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <a class="button is-info">Submit</a>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <label class="checkbox">
+                                <input type="checkbox"> Press enter to submit
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
     </div>
 </body>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
 </html>
