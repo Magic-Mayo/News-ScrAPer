@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const moment = require('moment');
-const Article = require('../articleModel');
+const db = require('../models');
 
 module.exports = (app) => {
     app.get('/articles', (req, res)=>{
@@ -23,12 +23,20 @@ module.exports = (app) => {
                 }
                 const date = $(elem).children('.CardHeadline').children('.signature').children('.Timestamp').attr('data-source');
         
+                db.Article.create({
+                    title: title,
+                    summary: summary,
+                    link: link,
+                    author: author(),
+                    date: moment(date).format("dddd, MMMM Do YYYY, HH:mm")
+                })
+
                 articles.push({
                     title: title,
                     summary: summary,
                     link: link,
                     author: author(),
-                    date: moment(date).format("dddd, MMMM Do YYYY, HH:mm"),
+                    date: moment(date).format("dddd, MMMM Do YYYY, HH:mm")
                 })
             })
             res.json(articles)
@@ -37,6 +45,6 @@ module.exports = (app) => {
 
     app.post('/article/comment', (req,res)=>{
         const article = req.body;
-        
+
     })
 }
