@@ -1,14 +1,16 @@
 $(document).ready(()=>{
     (() => {
-        console.log('something')
-        $.get('/articles', async articles => {
-            // articles.reduce((post)=>{
-            //     console.log(post)
-            // })            
-            // $('.article-post-count').text(`${articles.length} articles | ${articles}`)
+        $.get('/articles', articles => {
+            console.log(articles)
+            let postCount = articles.reduce((a,b)=>{
+                return a.posts.length + b.posts.length;
+            })
+
+            $('.article-post-count').text(`${articles.length} articles | ${postCount} comments`)
+            
             articles.map(article=>{
                 let postNum;
-                !!article.posts ? postNum = article.posts.length : postNum = '';
+                // !!articles.posts ? postNum = articles.posts.length : postNum = '';
                 $('.container').append(`
                     <article class="media">
                         <div class="media-content">
@@ -23,9 +25,9 @@ $(document).ready(()=>{
                             </span>
                         </div>
                         <nav class="level">
-                                <a class="level-item">
+                                <button class="level-item post-btn">
                                     <span class="icon">${postNum}&ensp;<i class="fas fa-comment-alt"></i></span>
-                                </a>
+                                </button>
                         </nav>
                     </article>`
                 );
