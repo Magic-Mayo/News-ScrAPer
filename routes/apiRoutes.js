@@ -43,8 +43,9 @@ module.exports = (app) => {
         })
     })
 
-    app.post('/article/comment', (req,res)=>{
-        const article = req.body;
-
+    app.post('/articles/comments', (req,res)=>{
+        const comment = req.body;
+        
+        db.Article.findOneAndUpdate({title: comment.title}, {comment: db.Article.addComment(comment.post)}, {new: true}).then(post=>res.json(post))
     })
 }
