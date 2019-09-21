@@ -1,12 +1,12 @@
 $(document).ready(()=>{
     (() => {
         $.get('/articles', articles => {
-            console.log(articles)
-            let postCount = articles.reduce((a,b)=>{
-                return a.posts.length + b.posts.length;
-            })
+            // console.log(articles)
+            // let postCount = articles.reduce((a,b)=>{
+            //     return a.posts.length + b.posts.length;
+            // })
 
-            $('.article-post-count').text(`${articles.length} articles | ${postCount} comments`)
+            // $('.article-post-count').text(`${articles.length} articles | ${postCount} comments`)
             
             articles.map(article=>{
                 let postNum;
@@ -29,11 +29,27 @@ $(document).ready(()=>{
                                     <span class="icon">${postNum}&ensp;<i class="fas fa-comment-alt"></i></span>
                                 </button>
                         </nav>
-                    </article>`
+                    </article>
+                    <article class="media hide add-comment">
+                    <div class="media-content">
+                        <div class="field">
+                            <p class="control">
+                                <textarea class="textarea" placeholder="Add a comment..."></textarea>
+                            </p>
+                        </div>
+                        <nav class="level">
+                            <div class="level-left">
+                                <div class="level-item">
+                                    <button class="button is-info" id="add-comment">Submit</button>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </article>`
                 );
 
                 if(article.comments){
-                    $('.media-content').append(
+                    $('.media-content').first().append(
                         `<article class="media">
                             <div class="media-content">
                             <div class="content">
@@ -46,29 +62,27 @@ $(document).ready(()=>{
         });
     })();
 
-    $(document).on('click', '.fa-comment-alt', function(e){
+    $(document).on('click', '.post-btn', function(e){
         e.preventDefault();
-        const title = $(this).parent().parent().parent().siblings('.content').children().children('.article-title').text();
+        $(this).parent().parent().parent().next().toggleClass('hide');
+    })
 
-        (()=>{
-            $(this).parents('.media').after(
+    $(document).on('click', '#add-comment', function(e){
+        e.preventDefault();
+        const comment = $(this).parents('.media-content').children('.field').children().children().val().trim();
+        const title = $(this).parents('.media-content').parent().prev().children().children().children().children('b').text();
+        $.post('articles/comments', {post: comment, title: title}).then(post=>{
+            console.log(post)
+            $('.media-content').first().append(
                 `<article class="media">
                     <div class="media-content">
-                        <div class="field">
-                            <p class="control">
-                                <textarea class="textarea" placeholder="Add a comment..."></textarea>
-                            </p>
-                        </div>
-                        <nav class="level">
-                            <div class="level-left">
-                                <div class="level-item">
-                                <a class="button is-info">Submit</a>
-                                </div>
-                            </div>
-                        </nav>
+                    <div class="content">
+                        <p class="comment">${post.comment}</p>
+                        <small>${post.date}</small>
                     </div>
                 </article>`
-            )
-        })();
+            );
+        })
+        $(this).parents('.media-content').children('.field').children().children().val('')
     })
 })
