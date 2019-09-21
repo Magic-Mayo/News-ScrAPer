@@ -32,4 +32,13 @@ nav {
     background-color: transparent;
     border: none;
     color: #3273dc;
+    width: auto;
+}
+
+.post-btn:hover {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
 }
