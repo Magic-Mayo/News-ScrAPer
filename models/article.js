@@ -6,11 +6,18 @@ const ArticleSchema = new Schema ({
     title: String,
     summary: String,
     date: String,
-    comments: String
+    comments: [{
+        post: {
+            type: String,
+            trim: true,
+        }, date: {
+            type: Date
+        }
+    }]
 })
 
 ArticleSchema.methods.addComment = function(post){
-    this.comments.push({post: post, date: Date.now()});
+    this.comments.push({post: post, date: moment(Date.now()).format('MM/DD/YYYY HH:mm')});
 }
 
 const Article = mongoose.model('ArticleSchema', ArticleSchema);
