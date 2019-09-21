@@ -27,3 +27,9 @@ nav {
 .article-title {
     font-size: 1.75rem;
 }
+
+.post-btn {
+    background-color: transparent;
+    border: none;
+    color: #3273dc;
+}
