@@ -32,7 +32,6 @@ nav {
     background-color: transparent;
     border: none;
     color: #3273dc;
-    width: auto;
 }
 
 .post-btn:hover {
@@ -40,5 +39,14 @@ nav {
 }
 
 .hide {
-    display: none;
+    display: none !important;
+}
+
+.comment {
+    font-size: 1.5rem;
+    font-weight: 550;
+}
+
+.comment + small {
+    font-size: .75rem;
 }
