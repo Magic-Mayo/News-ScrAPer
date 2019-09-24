@@ -5,9 +5,9 @@ const db = require('../models');
 
 module.exports = (app) => {
     app.get('/articles', (req, res)=>{
+        const articles = [];
         axios.get('https://www.apnews.com/apf-topnews').then(news=>{
             const $ = cheerio.load(news.data);
-            const articles = [];
             $('div.FeedCard').each((i,elem)=>{
                 const title = $(elem).children('.CardHeadline').children('.headline').text() || $(elem).children('a').children('.CardHeadline').children('.headline').text();
                 const summary = $(elem).children('a').children('.content').text() || 'No summary, please follow link';
@@ -28,7 +28,8 @@ module.exports = (app) => {
                     summary: summary,
                     link: link,
                     author: author(),
-                    date: moment(date).format("dddd, MMMM Do YYYY, HH:mm")
+                    date: moment(date).format("dddd, MMMM Do YYYY, HH:mm"),
+                    comment: []
                 })
 
                 articles.push({
@@ -39,13 +40,15 @@ module.exports = (app) => {
                     date: moment(date).format("dddd, MMMM Do YYYY, HH:mm")
                 })
             })
-            res.json(articles)
+            
+            db.Article.find({}).then(post=>{
+                res.json({comments: post.filter(comment=>{return comment.comments.length > 0}), news: articles})
+            })
         })
     })
 
     app.post('/articles/comments', (req,res)=>{
         const comment = req.body;
-        
-        db.Article.findOneAndUpdate({title: comment.title}, {comment: db.Article.addComment(comment.post)}, {new: true}).then(post=>res.json(post))
+        db.Article.findOneAndUpdate({title: comment.title}, {$push: {comments: {post: comment.post, date: moment()}}}, {new: true}).then(post=>{console.log(post);res.json(post)})
     })
 }
