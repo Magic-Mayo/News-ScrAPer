@@ -16,9 +16,5 @@ const ArticleSchema = new Schema ({
     }]
 })
 
-ArticleSchema.methods.addComment = function(post){
-    this.comments.push({post: post, date: moment(Date.now()).format('MM/DD/YYYY HH:mm')});
-}
-
 const Article = mongoose.model('ArticleSchema', ArticleSchema);
 module.exports = Article;
