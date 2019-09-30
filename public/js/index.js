@@ -5,10 +5,11 @@ $(document).ready(()=>{
                 return a.comments.length + b.comments.length;
             });
 
-            $('.article-post-count').text(`${articles.news.length} articles | ${commentCount} comments`);
-            console.log(articles)
+            if (articles.comments.length){
+                $('.article-post-count').text(`${articles.news.length} articles | ${commentCount} comments`);
+            }
+
             articles.news.map(article=>{
-                
                 for (let i=0; i<articles.comments.length; i++){
                     if (articles.comments[i].title === article.title){
                         const comment = articles.comments[i].comments;
@@ -118,7 +119,6 @@ $(document).ready(()=>{
         const comment = $(this).parents('.media-content').children('.field').children().children().val().trim();
         const title = $(this).parents('.media-content').parent().prev().children().children().children().children('b').text();
         $.post('/articles/comments', {post: comment, title: title}).then(post=>{
-            console.log(post)
             let comment = post.comments;
             let date;
             if (post.comments.length === 1){
